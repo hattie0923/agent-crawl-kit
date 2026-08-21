@@ -66,21 +66,23 @@ Read RSS:
 agent-crawl rss https://example.com/feed.xml --limit 10 --format jsonl
 ```
 
-## Output Contract
+## Flexible Structured Output
 
-Every command should preserve provenance:
+Commands use a small response envelope so agents can read status and provenance consistently. The `data` object is intentionally flexible and should match the user's request.
 
 ```json
 {
   "status": "ok",
   "retrieved_at": "2026-08-20T10:00:00Z",
   "source_url": "https://example.com",
-  "data": {},
+  "data": {
+    "any_requested_fields": "..."
+  },
   "evidence": []
 }
 ```
 
-When a channel is unavailable, commands return explicit unavailable or error states instead of inventing results.
+For example, `data` can contain article text, table rows, RSS items, repository metadata, transcript metadata, extracted links, or any future extractor output.
 
 ## Skill
 

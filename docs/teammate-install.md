@@ -89,15 +89,15 @@ agent-crawl github owner/repo --format json
 agent-crawl video https://example.com/video --format json
 ```
 
-## Output Fields
+## Flexible Structured Output
 
-Structured formats include:
+Structured formats use a small response envelope:
 
 - `status`
 - `source_url`
 - `retrieved_at`
-- `data`
-- `evidence`
+- `data`: flexible content requested by the user, such as article text, table rows, feed items, repository metadata, or video metadata.
+- `evidence`: optional source snippets or anchors.
 
 Commands may also return `error` when a channel is unavailable or a request fails.
 

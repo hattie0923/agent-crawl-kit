@@ -30,18 +30,20 @@ agent-crawl github owner/repo --format json
 agent-crawl video https://www.youtube.com/watch?v=example --format json
 ```
 
-## Output Shape
+## Flexible Structured Output
 
-Commands return structured output when a structured format is requested:
+Commands can return a small response envelope when a structured format is requested. The envelope is stable, while the `data` object stays flexible for the user's requested content.
 
 ```json
 {
   "status": "ok",
   "source_url": "https://example.com",
   "retrieved_at": "2026-08-20T10:00:00Z",
-  "data": {},
+  "data": {
+    "any_requested_fields": "..."
+  },
   "evidence": []
 }
 ```
 
-Status values include `ok`, `partial`, `unavailable`, `skipped`, and `error`.
+Status values include `ok`, `partial`, `unavailable`, `skipped`, and `error`. The `data` object can contain article fields, table rows, feed items, repository metadata, video metadata, links, or future extractor-specific fields.
