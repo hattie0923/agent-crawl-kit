@@ -16,14 +16,30 @@ agent-crawl doctor
 ## One-Line Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/hattie0923/agent-crawl-kit/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/hattie0923/agent-crawl-kit/main/scripts/install.sh | \
+  bash -s -- --agent auto
 ```
 
-To also install the agent skill:
+This installs the CLI and copies the skill to an auto-detected local skill directory.
+
+To install CLI only:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/hattie0923/agent-crawl-kit/main/scripts/install.sh | \
+  bash -s -- --agent none
+```
+
+To install to a known skill directory:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/hattie0923/agent-crawl-kit/main/scripts/install.sh | \
   bash -s -- --skill-dir "$HOME/.trae/skills"
+```
+
+Supported agent targets:
+
+```text
+auto, trae, claude, cursor, generic, none
 ```
 
 ## Optional Tools

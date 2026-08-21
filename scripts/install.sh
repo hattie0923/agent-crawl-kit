@@ -4,6 +4,7 @@ set -euo pipefail
 REPO_URL="${AGENT_CRAWL_REPO_URL:-https://github.com/hattie0923/agent-crawl-kit.git}"
 INSTALL_DIR="${AGENT_CRAWL_INSTALL_DIR:-$HOME/.agent-crawl-kit}"
 SKILL_DIR="${AGENT_CRAWL_SKILL_DIR:-}"
+AGENT_TARGET="${AGENT_CRAWL_AGENT:-}"
 PYTHON_BIN="${PYTHON_BIN:-python3}"
 
 usage() {
@@ -17,12 +18,14 @@ Options:
   --repo-url URL       Git repository URL. Defaults to the company repo.
   --install-dir DIR    Install directory. Defaults to ~/.agent-crawl-kit.
   --skill-dir DIR      Optional agent skill directory. Copies agent-crawl/SKILL.md there.
+  --agent NAME         Optional agent target: auto, trae, claude, cursor, generic, none.
   --help              Show this help.
 
 Environment:
   AGENT_CRAWL_REPO_URL
   AGENT_CRAWL_INSTALL_DIR
   AGENT_CRAWL_SKILL_DIR
+  AGENT_CRAWL_AGENT
   PYTHON_BIN
 EOF
 }
@@ -39,6 +42,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --skill-dir)
       SKILL_DIR="$2"
+      shift 2
+      ;;
+    --agent)
+      AGENT_TARGET="$2"
       shift 2
       ;;
     --help)
@@ -63,6 +70,57 @@ require_command() {
 
 require_command git
 require_command "$PYTHON_BIN"
+
+agent_skill_dir() {
+  local agent_name="$1"
+  case "$agent_name" in
+    trae)
+      echo "$HOME/.trae/skills"
+      ;;
+    claude)
+      echo "$HOME/.claude/skills"
+      ;;
+    cursor)
+      echo "$HOME/.cursor/skills"
+      ;;
+    generic)
+      echo "$HOME/.agents/skills"
+      ;;
+    none|"")
+      echo ""
+      ;;
+    *)
+      echo "Unknown agent target: $agent_name" >&2
+      echo "Supported targets: auto, trae, claude, cursor, generic, none" >&2
+      exit 2
+      ;;
+  esac
+}
+
+detect_skill_dir() {
+  local candidates=(
+    "$HOME/.trae/skills"
+    "$HOME/.claude/skills"
+    "$HOME/.cursor/skills"
+    "$HOME/.agents/skills"
+  )
+  local candidate
+  for candidate in "${candidates[@]}"; do
+    if [[ -d "$candidate" ]]; then
+      echo "$candidate"
+      return 0
+    fi
+  done
+  echo "$HOME/.agents/skills"
+}
+
+if [[ -z "$SKILL_DIR" && -n "$AGENT_TARGET" && "$AGENT_TARGET" != "none" ]]; then
+  if [[ "$AGENT_TARGET" == "auto" ]]; then
+    SKILL_DIR="$(detect_skill_dir)"
+  else
+    SKILL_DIR="$(agent_skill_dir "$AGENT_TARGET")"
+  fi
+fi
 
 if [[ -d "$INSTALL_DIR/.git" ]]; then
   echo "Updating Agent Crawl Kit in $INSTALL_DIR"
@@ -91,7 +149,7 @@ if [[ -n "$SKILL_DIR" ]]; then
   cp "$INSTALL_DIR/skills/agent-crawl/SKILL.md" "$SKILL_DIR/agent-crawl/SKILL.md"
   echo "Installed skill to $SKILL_DIR/agent-crawl/SKILL.md"
 else
-  echo "Skill install skipped. Set --skill-dir or AGENT_CRAWL_SKILL_DIR to install it."
+  echo "Skill install skipped. Set --agent auto, --skill-dir, AGENT_CRAWL_AGENT, or AGENT_CRAWL_SKILL_DIR to install it."
 fi
 
 echo
@@ -101,4 +159,3 @@ echo "  source \"$INSTALL_DIR/.venv/bin/activate\""
 echo "  agent-crawl doctor --format markdown"
 echo
 agent-crawl doctor --format markdown
-

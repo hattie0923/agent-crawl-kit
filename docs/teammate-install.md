@@ -12,12 +12,13 @@ Follow docs/install.md. After installation, run agent-crawl doctor --format mark
 Do not bypass login, paywalls, or platform restrictions. Only collect public or explicitly authorized information.
 ```
 
-## One-Line Install
+## Recommended One-Line Install
 
-For macOS or Linux:
+For macOS or Linux, install the toolkit and auto-detect the local agent skill directory:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/hattie0923/agent-crawl-kit/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/hattie0923/agent-crawl-kit/main/scripts/install.sh | \
+  bash -s -- --agent auto
 ```
 
 Default install location:
@@ -26,7 +27,25 @@ Default install location:
 ~/.agent-crawl-kit
 ```
 
-## Install With Skill Copy
+## Agent Targets
+
+Use an explicit target when auto-detection is not desired:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/hattie0923/agent-crawl-kit/main/scripts/install.sh | \
+  bash -s -- --agent trae
+```
+
+Supported targets:
+
+- `auto`: detect an existing skill directory, then fall back to `~/.agents/skills`.
+- `trae`: install to `~/.trae/skills`.
+- `claude`: install to `~/.claude/skills`.
+- `cursor`: install to `~/.cursor/skills`.
+- `generic`: install to `~/.agents/skills`.
+- `none`: install CLI only.
+
+## Manual Skill Directory
 
 If the agent has a known local skill directory, pass it explicitly:
 
@@ -85,7 +104,8 @@ Unavailable channels are reported explicitly. The agent should explain what is m
 ## Update
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/hattie0923/agent-crawl-kit/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/hattie0923/agent-crawl-kit/main/scripts/install.sh | \
+  bash -s -- --agent auto
 ```
 
 Or manually:
@@ -97,4 +117,3 @@ source .venv/bin/activate
 pip install -e .
 agent-crawl doctor --format markdown
 ```
-

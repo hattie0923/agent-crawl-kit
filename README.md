@@ -37,13 +37,14 @@ This project is built for agents used by teammates. After installation, users ca
 
 ## Quick Start
 
-One-line install:
+One-line install with auto skill setup:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/hattie0923/agent-crawl-kit/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/hattie0923/agent-crawl-kit/main/scripts/install.sh | \
+  bash -s -- --agent auto
 ```
 
-Install and copy the agent skill when the target skill directory is known:
+Install to a known skill directory:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/hattie0923/agent-crawl-kit/main/scripts/install.sh | \
