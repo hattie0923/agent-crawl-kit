@@ -2,6 +2,7 @@
 set -euo pipefail
 
 REPO_URL="${AGENT_CRAWL_REPO_URL:-https://github.com/hattie0923/agent-crawl-kit.git}"
+REPO_REF="${AGENT_CRAWL_REF:-main}"
 INSTALL_DIR="${AGENT_CRAWL_INSTALL_DIR:-$HOME/.agent-crawl-kit}"
 SKILL_DIR="${AGENT_CRAWL_SKILL_DIR:-}"
 AGENT_TARGET="${AGENT_CRAWL_AGENT:-}"
@@ -16,6 +17,7 @@ Usage:
 
 Options:
   --repo-url URL       Git repository URL. Defaults to the company repo.
+  --ref REF            Branch, tag, or commit to install. Defaults to main.
   --install-dir DIR    Install directory. Defaults to ~/.agent-crawl-kit.
   --skill-dir DIR      Optional agent skill directory. Copies agent-crawl/SKILL.md there.
   --agent NAME         Optional agent target: auto, trae, claude, cursor, generic, none.
@@ -23,6 +25,7 @@ Options:
 
 Environment:
   AGENT_CRAWL_REPO_URL
+  AGENT_CRAWL_REF
   AGENT_CRAWL_INSTALL_DIR
   AGENT_CRAWL_SKILL_DIR
   AGENT_CRAWL_AGENT
@@ -34,6 +37,10 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --repo-url)
       REPO_URL="$2"
+      shift 2
+      ;;
+    --ref)
+      REPO_REF="$2"
       shift 2
       ;;
     --install-dir)
@@ -124,7 +131,7 @@ fi
 
 if [[ -d "$INSTALL_DIR/.git" ]]; then
   echo "Updating Agent Crawl Kit in $INSTALL_DIR"
-  git -C "$INSTALL_DIR" pull --ff-only
+  git -C "$INSTALL_DIR" fetch --tags origin
 elif [[ -e "$INSTALL_DIR" ]]; then
   echo "Install directory exists but is not a git repository: $INSTALL_DIR" >&2
   exit 1
@@ -134,6 +141,10 @@ else
 fi
 
 cd "$INSTALL_DIR"
+git checkout "$REPO_REF"
+if [[ "$REPO_REF" == "main" ]]; then
+  git pull --ff-only origin main
+fi
 
 if [[ ! -d .venv ]]; then
   "$PYTHON_BIN" -m venv .venv

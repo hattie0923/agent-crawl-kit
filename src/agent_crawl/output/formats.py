@@ -57,7 +57,11 @@ def _emit_csv(payload: Any) -> None:
 def _emit_markdown(payload: Any) -> None:
     data = _to_data(payload)
     if isinstance(data, list) and data and all(isinstance(item, dict) for item in data):
-        fieldnames = sorted({key for item in data for key in item.keys()})
+        fieldnames = [
+            key
+            for key in sorted({key for item in data for key in item.keys()})
+            if any(item.get(key) not in (None, "") for item in data)
+        ]
         print("| " + " | ".join(fieldnames) + " |")
         print("| " + " | ".join("---" for _ in fieldnames) + " |")
         for item in data:

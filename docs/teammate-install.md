@@ -20,6 +20,13 @@ curl -fsSL https://raw.githubusercontent.com/hattie0923/agent-crawl-kit/main/scr
   bash -s -- --agent auto
 ```
 
+For a released version:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/hattie0923/agent-crawl-kit/main/scripts/install.sh | \
+  bash -s -- --agent auto --ref v0.1.0
+```
+
 Default install location:
 
 ```text
