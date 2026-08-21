@@ -12,8 +12,41 @@ It provides reusable commands and a skill description. Each team can decide its 
 - GitHub repository inspection through the official GitHub CLI.
 - Video transcript extraction through available local tooling.
 - Article and table extraction from fetched content.
+- Local cookie and token configuration for login-required backends.
+- OpenRouter key configuration and model listing.
+- Platform search through configured local backends.
 - JSON, JSONL, CSV, and Markdown-friendly output contracts.
 - Environment diagnosis so an agent can explain which channels are available.
+
+## Capability Levels
+
+### Built In
+
+- `doctor`: inspect available channels and local configuration.
+- `read-url`: read a URL and return title, text, links, and metadata.
+- `rss`: parse RSS or Atom feeds.
+- `extract article`: extract article-like fields from a page.
+- `extract table`: extract HTML tables from a page.
+- `configure`: store local cookies and tokens without printing secret values.
+- `platform search`: use configured local platform backends.
+
+### Requires Local Tools
+
+- `github`: requires `gh`.
+- `video`: requires `yt-dlp`.
+- `search`: requires a configured local search backend such as `mcporter`.
+- `bilibili`: requires a configured Bilibili CLI backend.
+- Browser-session platforms: require a configured browser automation backend such as `opencli`.
+- Twitter/X and Reddit CLI paths: require their configured local CLI backends.
+
+### Requires Login State Or Tokens
+
+- Private GitHub access uses `gh auth login`.
+- Twitter/X, Reddit, Xiaohongshu, Facebook, and Instagram can use locally stored cookies or browser-session backends.
+- Cookie values can be exported manually with Cookie Editor and stored locally with `agent-crawl configure cookie`.
+- OpenRouter uses `agent-crawl configure openrouter` or the `OPENROUTER_API_KEY` environment variable.
+
+Secrets are stored under `~/.agent-crawl/config` with user-only file permissions. Commands do not print stored secret values.
 
 ## Design
 
@@ -35,7 +68,7 @@ Install a released version:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/hattie0923/agent-crawl-kit/main/scripts/install.sh | \
-  bash -s -- --agent auto --ref v0.1.0
+  bash -s -- --agent auto --ref v0.2.0
 ```
 
 Install to a known skill directory:
@@ -73,6 +106,28 @@ Read RSS:
 agent-crawl rss https://example.com/feed.xml --limit 10 --format jsonl
 ```
 
+Configure a cookie exported with Cookie Editor:
+
+```bash
+agent-crawl configure cookie xiaohongshu --from-file ~/Downloads/xiaohongshu-cookie.txt
+```
+
+Configure OpenRouter:
+
+```bash
+export OPENROUTER_API_KEY="..."
+agent-crawl configure openrouter --from-env OPENROUTER_API_KEY
+agent-crawl openrouter models --limit 5 --format json
+```
+
+Search a configured platform backend:
+
+```bash
+agent-crawl platform search bilibili "AI tutorial" --limit 5 --format json
+agent-crawl platform search xiaohongshu "AI camera" --limit 5 --format json
+agent-crawl platform search twitter "new model release" --limit 5 --format json
+```
+
 ## Flexible Structured Output
 
 Commands use a small response envelope so agents can read status and provenance consistently. The `data` object is intentionally flexible and should match the user's request.
@@ -102,3 +157,5 @@ skills/agent-crawl/SKILL.md
 Install that skill into the target agent environment so the agent knows when to call this toolkit and how to report crawl results.
 
 For teammate onboarding, see [docs/teammate-install.md](docs/teammate-install.md).
+
+For login-state and token setup, see [docs/login-state.md](docs/login-state.md).

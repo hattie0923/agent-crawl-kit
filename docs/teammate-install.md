@@ -24,7 +24,7 @@ For a released version:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/hattie0923/agent-crawl-kit/main/scripts/install.sh | \
-  bash -s -- --agent auto --ref v0.1.0
+  bash -s -- --agent auto --ref v0.2.0
 ```
 
 Default install location:
@@ -94,6 +94,47 @@ agent-crawl extract table https://example.com/pricing --format csv
 agent-crawl rss https://example.com/feed.xml --limit 10 --format jsonl
 agent-crawl github owner/repo --format json
 agent-crawl video https://example.com/video --format json
+agent-crawl search "your query" --limit 5 --format json
+agent-crawl platform search bilibili "AI tutorial" --limit 5 --format json
+agent-crawl platform search xiaohongshu "AI camera" --limit 5 --format json
+agent-crawl openrouter models --limit 5 --format json
+```
+
+## Built-In And Optional Capabilities
+
+Built in:
+
+- `doctor`
+- `read-url`
+- `rss`
+- `extract article`
+- `extract table`
+- `configure`
+- `platform search`
+
+Requires local tools:
+
+- `github`: requires `gh`.
+- `video`: requires `yt-dlp`.
+- `search`: requires a configured search backend such as `mcporter`.
+- `bilibili`: requires a configured Bilibili backend.
+- Browser-session platforms: require a configured browser backend such as `opencli`.
+
+Login state and tokens:
+
+- GitHub private access uses `gh auth login`.
+- Twitter/X, Reddit, Xiaohongshu, Facebook, and Instagram can use locally stored cookies or browser-session backends.
+- Cookie Editor can be used to manually export cookies from an existing browser session.
+- OpenRouter can be configured as a token-backed LLM backend.
+
+## Cookie And Token Configuration
+
+```bash
+agent-crawl configure cookie twitter --from-stdin
+agent-crawl configure cookie xiaohongshu --from-file ~/Downloads/xiaohongshu-cookie.txt
+agent-crawl configure openrouter --from-env OPENROUTER_API_KEY
+agent-crawl configure list --format markdown
+agent-crawl doctor --format markdown
 ```
 
 ## Flexible Structured Output

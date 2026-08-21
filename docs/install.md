@@ -26,7 +26,7 @@ To install a released version:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/hattie0923/agent-crawl-kit/main/scripts/install.sh | \
-  bash -s -- --agent auto --ref v0.1.0
+  bash -s -- --agent auto --ref v0.2.0
 ```
 
 To install CLI only:
