@@ -37,6 +37,21 @@ This project is built for agents used by teammates. After installation, users ca
 
 ## Quick Start
 
+One-line install:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/hattie0923/agent-crawl-kit/main/scripts/install.sh | bash
+```
+
+Install and copy the agent skill when the target skill directory is known:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/hattie0923/agent-crawl-kit/main/scripts/install.sh | \
+  bash -s -- --skill-dir "$HOME/.trae/skills"
+```
+
+Manual local install:
+
 ```bash
 cd agent-crawl-kit
 python -m venv .venv
@@ -89,3 +104,4 @@ skills/agent-crawl/SKILL.md
 
 Install that skill into the target agent environment so the agent knows when to call this toolkit and how to report crawl results.
 
+For teammate onboarding, see [docs/teammate-install.md](docs/teammate-install.md).
