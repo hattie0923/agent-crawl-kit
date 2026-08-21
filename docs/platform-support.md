@@ -6,15 +6,15 @@ Agent Crawl Kit uses local tools and explicit user configuration. Availability d
 
 | Channel | Purpose | Typical Backend |
 |---|---|---|
-| Web | Read public pages | Python HTTP, `curl`, readable text endpoints |
-| RSS | Read public feeds | Python stdlib XML parsing |
+| Web | Read pages | Python HTTP, `curl`, readable text endpoints |
+| RSS | Read feeds | Python stdlib XML parsing |
 | GitHub | Inspect repositories | `gh` CLI |
 | Video | Extract metadata or subtitles | `yt-dlp` when available |
 | Search | Search web or code | configured local search tools |
 
-## Login Or Manual Configuration
+## Manual Configuration
 
-Some platforms require a user-controlled browser session, cookies, or approved tools. The toolkit must not log in on behalf of the user.
+Some channels can be connected to local sessions, tokens, cookies, or additional command-line tools depending on the agent environment.
 
 ## Status Values
 
@@ -24,7 +24,4 @@ Some platforms require a user-controlled browser session, cookies, or approved t
 - `skipped`: the command intentionally did not run.
 - `error`: the command failed after attempting the supported route.
 
-## Agent Behavior
-
-Agents should run `agent-crawl doctor` before complex collection tasks and explain unavailable channels before continuing.
-
+Use `agent-crawl doctor` to inspect the current machine.

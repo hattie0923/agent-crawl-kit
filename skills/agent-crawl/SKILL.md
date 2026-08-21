@@ -1,38 +1,22 @@
 ---
 name: "agent-crawl"
-description: "Collects and extracts public web information with evidence. Invoke when users ask agents to search, crawl, read URLs, parse RSS, inspect GitHub, or extract tables/articles."
+description: "Collects and extracts web information. Invoke when users ask agents to search, crawl, read URLs, parse RSS, inspect GitHub, or extract tables/articles."
 ---
 
 # Agent Crawl
 
-Use this skill when the user needs public information collection, web reading, crawling, or structured extraction.
+Use this skill when the user needs internet information access, crawling, or structured extraction.
 
-## Use Cases
+## Capabilities
 
-- Search the web or code hosting sites for public information.
+- Check available local crawl channels.
+- Search the web through configured local search tooling.
 - Read a URL and extract title, text, links, and metadata.
 - Parse RSS or Atom feeds.
-- Inspect public GitHub repositories through local official tooling.
-- Extract public video metadata or transcripts when local tooling supports it.
+- Inspect GitHub repositories through local tooling.
+- Extract video metadata or transcripts when local tooling supports it.
 - Extract article fields, tables, lists, links, dates, prices, or contacts from fetched content.
 - Convert crawl results to JSON, JSONL, CSV, or Markdown.
-
-## Boundaries
-
-- Do not make business judgments.
-- Do not score leads or classify competitors.
-- Do not bypass authentication, paywalls, or platform controls.
-- Do not collect private or sensitive data unless the user explicitly owns and authorizes access.
-- Do not fabricate missing data.
-
-## Standard Workflow
-
-1. Run `agent-crawl doctor` before broad or multi-platform collection tasks.
-2. Choose the available channel for the requested source.
-3. Fetch or search the source.
-4. Extract structured fields only when evidence is available.
-5. Return `source_url`, `retrieved_at`, status, data, and evidence.
-6. Explain unavailable channels and suggest configuration steps.
 
 ## Commands
 
@@ -46,9 +30,9 @@ agent-crawl github owner/repo --format json
 agent-crawl video https://www.youtube.com/watch?v=example --format json
 ```
 
-## Output Rules
+## Output Shape
 
-Always prefer structured output with provenance:
+Commands return structured output when a structured format is requested:
 
 ```json
 {
@@ -60,5 +44,4 @@ Always prefer structured output with provenance:
 }
 ```
 
-If the result is incomplete, mark it as `partial`. If a channel is missing, mark it as `unavailable`.
-
+Status values include `ok`, `partial`, `unavailable`, `skipped`, and `error`.

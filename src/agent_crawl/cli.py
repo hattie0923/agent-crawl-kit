@@ -24,7 +24,7 @@ def main(argv: list[str] | None = None) -> int:
     doctor_parser = subparsers.add_parser("doctor", help="Check available crawl channels")
     _add_format(doctor_parser, default="markdown")
 
-    read_parser = subparsers.add_parser("read-url", help="Read a public URL")
+    read_parser = subparsers.add_parser("read-url", help="Read a URL")
     read_parser.add_argument("url")
     _add_format(read_parser)
 
@@ -42,7 +42,7 @@ def main(argv: list[str] | None = None) -> int:
     github_parser.add_argument("repo", help="Repository in owner/name form")
     _add_format(github_parser)
 
-    video_parser = subparsers.add_parser("video", help="Inspect public video metadata")
+    video_parser = subparsers.add_parser("video", help="Inspect video metadata")
     video_parser.add_argument("url")
     _add_format(video_parser)
 
@@ -89,4 +89,3 @@ def _dispatch(args: argparse.Namespace) -> object:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

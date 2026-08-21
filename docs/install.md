@@ -44,10 +44,10 @@ auto, trae, claude, cursor, generic, none
 
 ## Optional Tools
 
-Install optional tools only when the user approves them:
+Optional tools:
 
 - `gh` for GitHub repository and code access.
-- `yt-dlp` for public video metadata and subtitles.
+- `yt-dlp` for video metadata and subtitles.
 - `curl` for HTTP fallback.
 - Browser automation tools when JavaScript-rendered pages must be read.
 

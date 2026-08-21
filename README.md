@@ -1,8 +1,8 @@
 # Agent Crawl Kit
 
-Agent Crawl Kit is an installable capability pack that gives coding agents a practical way to search, read, crawl, and extract public information from the internet.
+Agent Crawl Kit is an installable capability pack that gives coding agents a practical way to search, read, crawl, and extract information from the internet.
 
-It focuses on information access and data extraction only. It does not make business judgments, score leads, classify competitors, or generate strategy.
+It provides reusable commands and a skill description. Each team can decide its own workflows, prompts, and downstream business logic.
 
 ## What It Provides
 
@@ -15,25 +15,12 @@ It focuses on information access and data extraction only. It does not make busi
 - JSON, JSONL, CSV, and Markdown-friendly output contracts.
 - Environment diagnosis so an agent can explain which channels are available.
 
-## Intended Users
+## Design
 
-This project is built for agents used by teammates. After installation, users can ask their agent to:
-
-- Search the web and read the most relevant sources.
-- Read a URL and extract the title, text, links, and metadata.
-- Parse a pricing page into structured rows.
-- Read RSS updates from a source.
-- Inspect a GitHub repository, releases, issues, or README.
-- Extract video transcripts when local tooling supports it.
-- Return structured data with source evidence instead of untraceable summaries.
-
-## Non-Goals
-
-- No business-specific scoring or classification.
-- No private-data scraping.
-- No credential bypassing or automated login.
-- No platform terms circumvention.
-- No hidden fallback to fabricated data.
+- Capability-first: commands expose reusable access and extraction functions.
+- Workflow-neutral: teams decide when and how to combine commands.
+- Agent-friendly: the included skill tells agents which commands exist.
+- Structured: commands can return JSON, JSONL, CSV, or Markdown.
 
 ## Quick Start
 

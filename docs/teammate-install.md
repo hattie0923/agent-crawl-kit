@@ -1,6 +1,6 @@
 # Teammate Install Guide
 
-Give this page to teammates when they want their agent to gain public information crawling and extraction capability.
+Give this page to teammates when they want their agent to gain information crawling and extraction capability.
 
 ## Copy This To Your Agent
 
@@ -9,7 +9,6 @@ Please install the company information crawling capability pack from:
 https://github.com/hattie0923/agent-crawl-kit
 
 Follow docs/install.md. After installation, run agent-crawl doctor --format markdown and tell me which channels are available.
-Do not bypass login, paywalls, or platform restrictions. Only collect public or explicitly authorized information.
 ```
 
 ## Recommended One-Line Install
@@ -77,7 +76,7 @@ pip install -e .
 agent-crawl doctor --format markdown
 ```
 
-## Daily Usage
+## Command Reference
 
 ```bash
 source ~/.agent-crawl-kit/.venv/bin/activate
@@ -87,11 +86,12 @@ agent-crawl extract article https://example.com --format json
 agent-crawl extract table https://example.com/pricing --format csv
 agent-crawl rss https://example.com/feed.xml --limit 10 --format jsonl
 agent-crawl github owner/repo --format json
+agent-crawl video https://example.com/video --format json
 ```
 
-## What To Expect
+## Output Fields
 
-The toolkit returns structured data with provenance:
+Structured formats include:
 
 - `status`
 - `source_url`
@@ -99,7 +99,7 @@ The toolkit returns structured data with provenance:
 - `data`
 - `evidence`
 
-Unavailable channels are reported explicitly. The agent should explain what is missing instead of guessing.
+Commands may also return `error` when a channel is unavailable or a request fails.
 
 ## Update
 
